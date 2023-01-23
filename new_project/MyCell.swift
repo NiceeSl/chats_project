@@ -25,10 +25,10 @@ class MyCell: UITableViewCell {
         func viewDidAppear(_ animated: Bool) {
         }
     }
-        func configureImage(chat: Chat) {
-            imgView?.image = UIImage(named: chat.image)
-            emotionImg.image = UIImage(named: chat.emotion)
-        }
+//        func configureImage(chat: Chat) {
+//            imgView?.image = UIImage(named: chat.image)
+//            emotionImg.image = UIImage(named: chat.emotion)
+//        }
     }
     
     @IBDesignable extension UIView {
@@ -46,10 +46,10 @@ class MyCell: UITableViewCell {
 
 
 @IBDesignable class GradientView: UIView {
-    @IBInspectable var firstColor: UIColor = UIColor.red
-    @IBInspectable var secondColor: UIColor = UIColor.green
+    @IBInspectable var firstColor: UIColor = UIColor.orange
+    @IBInspectable var secondColor: UIColor = UIColor.red
 
-    @IBInspectable var vertical: Bool = true
+    @IBInspectable var vertical: Bool = false
 
     lazy var gradientLayer: CAGradientLayer = {
         let layer = CAGradientLayer()

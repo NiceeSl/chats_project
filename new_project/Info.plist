@@ -8,6 +8,9 @@
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Gilroy-Regular.eot</string>
+		<string>gilroy-bold.ttf</string>
+		<string>gilroy-regular.ttf</string>
 		<string>Gilroy-ExtraBold.otf</string>
 		<string>Gilroy-Light.otf</string>
 	</array>
