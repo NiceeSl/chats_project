@@ -31,7 +31,7 @@ class ViewController: UIViewController {
         emotions.append(Emotion(emotion: "icon.emotion"))
         emotions.append(Emotion(emotion: "icon.emotion3"))
         emotions.append(Emotion(emotion: "icon.emotion5"))
-        emotions.append(Emotion(emotion: "icon.emotion6"))
+        emotions.append(Emotion(emotion: "image6"))
     }
 
     func loadImage() {
@@ -49,12 +49,12 @@ class ViewController: UIViewController {
     }
     
     func loadChat() {
-        chats.append(Chat(name: "Бетмен", login: "alina.loon, 27", message: "Отлично, встретимся там...", image: photos[0], emotion: emotions[0], timeOfEvent: "17:00", lastMessage: "14:41" ))
-        chats.append(Chat(name: "Стиль", login: "cristina, 23", message: "ок", image: photos[1], emotion: emotions[1], timeOfEvent: "20:00", lastMessage: "12:41" ))
-        chats.append(Chat(name: "Ужин", login: "ann.aeom, 25", message: "ок", image: photos[2] , emotion: emotions[2], timeOfEvent: "23:00", lastMessage:  "12:41" ))
-        chats.append(Chat(name: "Kaif", login: "ann.aeom, 25", message: "Отлично, встретимся там...", image: photos[2], emotion: emotions[2], timeOfEvent: "", lastMessage: "14:41" ))
-        chats.append(Chat(name: "Whiteikeo", login: "angelika, 23", message: "Отлично, встретимся там...", image: photos[3], emotion: emotions[3],  timeOfEvent: "12 января", lastMessage: "14:41" ))
-        chats.append(Chat(name: "Макияждлясебя", login: "olaeiue, 25", message: "Отлично, встретимся там...", image: photos[4], emotion: emotions[4], timeOfEvent: "9 декабря", lastMessage: "14:41" ))
+        chats.append(Chat(name: "Бетмен", login: "alina.loon, 27", message: "Отлично, встретимся там...", image: photos[0], emotion: emotions[0], timeOfEvent: "17:00", lastMessage: "14:41", isOnline: true ))
+        chats.append(Chat(name: "Стиль", login: "cristina, 23", message: "ок", image: photos[1], emotion: emotions[1], timeOfEvent: "20:00", lastMessage: "12:41", isOnline: false ))
+        chats.append(Chat(name: "Ужин", login: "ann.aeom, 25", message: "ок", image: photos[2] , emotion: emotions[2], timeOfEvent: "23:00", lastMessage:  "12:41", isOnline: false ))
+        chats.append(Chat(name: "Kaif", login: "ann.aeom, 25", message: "Отлично, встретимся там...", image: photos[2], emotion: emotions[2], timeOfEvent: "", lastMessage: "14:41", isOnline: false ))
+        chats.append(Chat(name: "Whiteikeo", login: "angelika, 23", message: "Отлично, встретимся там...", image: photos[3], emotion: emotions[3],  timeOfEvent: "12 января", lastMessage: "14:41", isOnline: false ))
+        chats.append(Chat(name: "Макияждлясебя", login: "olaeiue, 25", message: "Отлично, встретимся там...", image: photos[4], emotion: emotions[4], timeOfEvent: "9 декабря", lastMessage: "14:41", isOnline: false ))
     }
     
     override func viewDidLoad() {
@@ -116,35 +116,36 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 35//UITableView.automaticDimension
+        return 35 //UITableView.automaticDimension
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell") as! MyCell
-        //let chat = chats[indexPath.row]
-        //cell.configureImage(chat: chats[indexPath.row])
-        cell.nameLabel.text = sections[indexPath.section].chats[indexPath.row].name
-        cell.accountLabel.text = sections[indexPath.section].chats[indexPath.row].login
-        cell.messageLabel.text = sections[indexPath.section].chats[indexPath.row].message
-        cell.timeOfEventLbl.text = sections[indexPath.section].chats[indexPath.row].timeOfEvent
-        cell.lastMessageLbl.text = sections[indexPath.section].chats[indexPath.row].lastMessage
-        cell.imgView.image = UIImage(named: sections[indexPath.section].chats[indexPath.row].image.photo)
-        cell.emotionImg.image = UIImage(named: sections[indexPath.section].chats[indexPath.row].emotion.emotion)
-//        if (chats.count - 4 == indexPath.section)  {
-//            cell.backView.isHidden = true
-//        }
-        print("indexPath.section = ", indexPath.section)
-        if (sections.count - 1 == indexPath.section) {
-            //cell.timeOfEventLbl.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
-            cell.timeOfEventLbl.text = "Test"
+        cell.updateContent(sections[indexPath.section].chats[indexPath.row])
+        
+        if(chats[indexPath.row].isOnline == true) {
+            cell.backView.backgroundColor = .red
         }
-
-        if (sections.count - 1 == indexPath.section) {
-            cell.timeOfEventLbl.textColor = .white
+        if(sections[indexPath.section].section == "Завершенные") {
+            cell.accountLabel.textColor = .systemGray2
+            cell.timeOfEventLbl.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
         }
-//        if (sections.count == indexPath.section) {
-//            cell.accountLabel.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
-//        }
+        
+        switch (indexPath.section, indexPath.row) {
+        case(indexPath.section, 0):
+            cell.view.roundCorners([.topLeft, .topRight], radius: 15)
+            if(tableView.numberOfRows(inSection: 1) == 1) {
+                
+            }
+        case(indexPath.section, 2):
+            cell.view.roundCorners([.bottomLeft, .bottomRight], radius: 15)
+            
+        case(2, 1):
+            cell.view.roundCorners([.bottomLeft, .bottomRight], radius: 15)
+        default:
+            break
+        }
+        
         return cell
     }
 }

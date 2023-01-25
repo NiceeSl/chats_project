@@ -9,6 +9,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Gilroy-Regular.eot</string>
+		<string>gilroy-semibold.ttf</string>
 		<string>gilroy-bold.ttf</string>
 		<string>gilroy-regular.ttf</string>
 		<string>Gilroy-ExtraBold.otf</string>

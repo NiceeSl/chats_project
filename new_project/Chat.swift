@@ -21,6 +21,7 @@ struct Chat {
     let emotion: Emotion
     let timeOfEvent: String
     let lastMessage: String
+    var isOnline: Bool 
 }
 
 struct Photo {
@@ -31,15 +32,4 @@ struct Emotion {
     let emotion: String
 }
     
-//    init(name: [String], login: [String], message: [String], image: [String], emotion: [String], section: String, timeOfEvent: [String], lastMessage: [String], isExpandable: Bool) {
-//        self.name = name
-//        self.login = login
-//        self.message = message
-//        self.image = image
-//        self.emotion = emotion
-//        self.section = section
-//        self.timeOfEvent = timeOfEvent
-//        self.lastMessage = lastMessage
-//        self.isExpandable = isExpandable
-//    }
 

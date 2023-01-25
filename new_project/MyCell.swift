@@ -21,41 +21,45 @@ class MyCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-
+        
         func viewDidAppear(_ animated: Bool) {
         }
     }
-//        func configureImage(chat: Chat) {
-//            imgView?.image = UIImage(named: chat.image)
-//            emotionImg.image = UIImage(named: chat.emotion)
-//        }
-    }
     
-    @IBDesignable extension UIView {
+    func updateContent(_ model: Chat) {
+        nameLabel.text = model.name
+        accountLabel.text = model.login
+        messageLabel.text = model.message
+        timeOfEventLbl.text = model.timeOfEvent
+        lastMessageLbl.text = model.lastMessage
+        imgView.image = UIImage(named: model.image.photo)
+        emotionImg.image = UIImage(named: model.emotion.emotion)
+    }
+}
+    
+@IBDesignable extension UIView {
         @IBInspectable var cornerRadius: CGFloat {
             get { return layer.cornerRadius }
             set {
                 layer.cornerRadius = newValue
                 
-                // If masksToBounds is true, subviews will be
-                // clipped to the rounded corners.
                 layer.masksToBounds = (newValue > 0)
             }
         }
     }
 
-
 @IBDesignable class GradientView: UIView {
     @IBInspectable var firstColor: UIColor = UIColor.orange
     @IBInspectable var secondColor: UIColor = UIColor.red
-
+    
     @IBInspectable var vertical: Bool = false
 
-    lazy var gradientLayer: CAGradientLayer = {
-        let layer = CAGradientLayer()
-        layer.colors = [firstColor.cgColor, secondColor.cgColor]
-        layer.startPoint = CGPoint.zero
-        return layer
+        lazy var gradientLayer: CAGradientLayer = {
+            let layer = CAGradientLayer()
+            layer.colors = [firstColor.cgColor, secondColor.cgColor]
+            layer.startPoint = CGPoint.zero
+            layer.locations = [0, 100]
+            return layer
     }()
 
     //MARK: -
@@ -96,6 +100,17 @@ class MyCell: UITableViewCell {
     func updateGradientDirection() {
         gradientLayer.endPoint = vertical ? CGPoint(x: 0, y: 1) : CGPoint(x: 1, y: 0)
     }
+}
+
+extension UIView {
+
+    func roundCorners(_ corners: UIRectCorner, radius: CGFloat) {
+         let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+         let mask = CAShapeLayer()
+         mask.path = path.cgPath
+         self.layer.mask = mask
+    }
+
 }
 
 @IBDesignable class ThreeColorsGradientView: UIView {
