@@ -123,9 +123,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell") as! MyCell
         cell.updateContent(sections[indexPath.section].chats[indexPath.row])
         
-        if(chats[indexPath.row].isOnline == true) {
-            cell.backView.backgroundColor = .red
-        }
         if(sections[indexPath.section].section == "Завершенные") {
             cell.accountLabel.textColor = .systemGray2
             cell.timeOfEventLbl.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
@@ -154,8 +151,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             cell.backView.isHidden = false
         }
         
-        if(sections[indexPath.section].chats[indexPath.row].isOnline == false) {
-            cell.backView.layer.backgroundColor = CGColor(red: 0, green: 255, blue: 0, alpha: 1)
+        if(sections[indexPath.section].chats[indexPath.row].isOnline == true) {
         }
         return cell
     }

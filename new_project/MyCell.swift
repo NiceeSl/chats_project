@@ -49,10 +49,10 @@ class MyCell: UITableViewCell {
     }
 
 @IBDesignable class GradientView: UIView {
-    @IBInspectable var firstColor: UIColor = UIColor.clear
-    @IBInspectable var secondColor: UIColor = UIColor.clear
+    @IBInspectable var firstColor: UIColor = UIColor.red
+    @IBInspectable var secondColor: UIColor = UIColor.orange
     
-    @IBInspectable var vertical: Bool = false
+    @IBInspectable var vertical: Bool = true
 
         lazy var gradientLayer: CAGradientLayer = {
             let layer = CAGradientLayer()
