@@ -49,8 +49,8 @@ class MyCell: UITableViewCell {
     }
 
 @IBDesignable class GradientView: UIView {
-    @IBInspectable var firstColor: UIColor = UIColor.orange
-    @IBInspectable var secondColor: UIColor = UIColor.red
+    @IBInspectable var firstColor: UIColor = UIColor.clear
+    @IBInspectable var secondColor: UIColor = UIColor.clear
     
     @IBInspectable var vertical: Bool = false
 

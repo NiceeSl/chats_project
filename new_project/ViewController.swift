@@ -69,9 +69,9 @@ class ViewController: UIViewController {
         loadSection()
         
         
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
+//        DispatchQueue.main.async {
+//            self.tableView.reloadData()
+//        }
 
         //tableView.sectionHeaderHeight = UITableView.automaticDimension
         //tableView.estimatedSectionHeaderHeight = 36;
@@ -131,21 +131,32 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             cell.timeOfEventLbl.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
         }
         
-        switch (indexPath.section, indexPath.row) {
-        case(indexPath.section, 0):
-            cell.view.roundCorners([.topLeft, .topRight], radius: 15)
-            if(tableView.numberOfRows(inSection: 1) == 1) {
-                
+        func isFirstRowInSection() {
+            if(indexPath.row == 0){
+                cell.view.roundCorners([.topLeft, .topRight], radius: 15)
             }
-        case(indexPath.section, 2):
-            cell.view.roundCorners([.bottomLeft, .bottomRight], radius: 15)
-            
-        case(2, 1):
-            cell.view.roundCorners([.bottomLeft, .bottomRight], radius: 15)
-        default:
-            break
         }
         
+        func isLastRowInSection() {
+            if(indexPath.row == sections[indexPath.section].chats.count - 1) {
+                cell.view.roundCorners([.bottomLeft, .bottomRight], radius: 15)
+            }
+        }
+        
+        isFirstRowInSection()
+        isLastRowInSection()
+        
+        if((indexPath.row == 0) && (indexPath.row == sections[indexPath.section].chats.count - 1)) {
+            cell.view.roundCorners(.allCorners, radius: 15)
+        }
+        
+        if(indexPath.section == 0) {
+            cell.backView.isHidden = false
+        }
+        
+        if(sections[indexPath.section].chats[indexPath.row].isOnline == false) {
+            cell.backView.layer.backgroundColor = CGColor(red: 0, green: 255, blue: 0, alpha: 1)
+        }
         return cell
     }
 }
