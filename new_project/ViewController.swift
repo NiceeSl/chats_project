@@ -25,6 +25,17 @@ class ViewController: UIViewController {
     var sections = [Section]()
     var photos = [Photo]()
     var emotions = [Emotion]()
+    var messages = [Message]()
+    
+    func takeDate(year: Int,mounth: Int, day: Int, hour: Int, minute: Int) -> Date {
+        var components = DateComponents()
+        components.year = year
+        components.day = day
+        components.month = mounth
+        components.hour = hour
+        components.minute = minute
+        return Calendar.current.date(from: components)!
+    }
     
     func loadEmotion() {
         emotions.append(Emotion(emotion: "cherry"))
@@ -32,6 +43,16 @@ class ViewController: UIViewController {
         emotions.append(Emotion(emotion: "icon.emotion3"))
         emotions.append(Emotion(emotion: "icon.emotion5"))
         emotions.append(Emotion(emotion: "image6"))
+    }
+    
+    func loadMessage() {
+        messages.append(Message(text: "Отлично, встретимся там...", messageDate: takeDate(year: 2023, mounth: 1, day: 12, hour: 14, minute: 41)))
+        messages.append(Message(text: "ок", messageDate: takeDate(year: 2023, mounth: 1, day: 12, hour: 12, minute: 41)))
+        messages.append(Message(text: "ок", messageDate: takeDate(year: 2023, mounth: 1, day: 12, hour: 12, minute: 41)))
+        messages.append(Message(text: "Отлично, встретимся там...", messageDate: takeDate(year: 2023, mounth: 3, day: 12, hour: 14, minute: 41)))
+        messages.append(Message(text: "Отлично, встретимся там...", messageDate: takeDate(year: 2023, mounth: 1, day: 12, hour: 14, minute: 41)))
+        messages.append(Message(text: "Отлично, встретимся там...", messageDate: takeDate(year: 2023, mounth: 12, day: 9, hour: 14, minute: 41)))
+        
     }
 
     func loadImage() {
@@ -49,12 +70,22 @@ class ViewController: UIViewController {
     }
     
     func loadChat() {
-        chats.append(Chat(name: "Бетмен", login: "alina.loon, 27", message: "Отлично, встретимся там...", image: photos[0], emotion: emotions[0], timeOfEvent: "17:00", lastMessage: "14:41", isOnline: true ))
-        chats.append(Chat(name: "Стиль", login: "cristina, 23", message: "ок", image: photos[1], emotion: emotions[1], timeOfEvent: "20:00", lastMessage: "12:41", isOnline: false ))
-        chats.append(Chat(name: "Ужин", login: "ann.aeom, 25", message: "ок", image: photos[2] , emotion: emotions[2], timeOfEvent: "23:00", lastMessage:  "12:41", isOnline: false ))
-        chats.append(Chat(name: "Kaif", login: "ann.aeom, 25", message: "Отлично, встретимся там...", image: photos[2], emotion: emotions[2], timeOfEvent: "", lastMessage: "14:41", isOnline: false ))
-        chats.append(Chat(name: "Whiteikeo", login: "angelika, 23", message: "Отлично, встретимся там...", image: photos[3], emotion: emotions[3],  timeOfEvent: "12 января", lastMessage: "14:41", isOnline: false ))
-        chats.append(Chat(name: "Макияждлясебя", login: "olaeiue, 25", message: "Отлично, встретимся там...", image: photos[4], emotion: emotions[4], timeOfEvent: "9 декабря", lastMessage: "14:41", isOnline: false ))
+        chats.append(Chat(name: "Бетмен", login: "alina.loon, 27", message: messages[0], image: photos[0], emotion: emotions[0], startedAt: takeDate(year: 2023, mounth: 1, day: 12,hour: 17,minute: 0), completedAt: takeDate(year: 2024, mounth: 1, day: 12, hour: 17, minute: 0), isOnline: true ))
+        
+        
+        chats.append(Chat(name: "Стиль", login: "cristina, 23", message: messages[1], image: photos[1], emotion: emotions[1], startedAt: takeDate(year: 2023, mounth: 1, day: 12, hour: 20, minute: 0), completedAt: takeDate(year: 2024, mounth: 1, day: 12, hour: 20, minute: 0), isOnline: false ))
+        
+        
+        chats.append(Chat(name: "Ужин", login: "ann.aeom, 25", message: messages[2], image: photos[2] , emotion: emotions[2], startedAt: takeDate(year: 2023, mounth: 1, day: 12, hour: 23, minute: 0), completedAt: takeDate(year: 2024, mounth: 1, day: 12, hour: 23, minute: 0), isOnline: false ))
+        
+        
+        chats.append(Chat(name: "Kaif", login: "ann.aeom, 25", message: messages[3], image: photos[2], emotion: emotions[2], startedAt: takeDate(year: 2023, mounth: 3, day: 12, hour: 17, minute: 0), completedAt: takeDate(year: 2024, mounth: 3, day: 12, hour: 17, minute: 0), isOnline: false ))
+        
+        
+        chats.append(Chat(name: "Whiteikeo", login: "angelika, 23", message: messages[4], image: photos[3], emotion: emotions[3], startedAt: takeDate(year: 2022, mounth: 1, day: 12, hour: 17, minute: 0), completedAt: takeDate(year: 2021, mounth: 1, day: 12, hour: 17, minute: 0), isOnline: false ))
+        
+        
+        chats.append(Chat(name: "Макияждлясебя", login: "olaeiue, 25", message: messages[5], image: photos[4], emotion: emotions[4], startedAt: takeDate(year: 2022, mounth: 12, day: 12, hour: 17, minute: 0), completedAt: takeDate(year: 2022, mounth: 12, day: 9, hour: 17, minute: 0),  isOnline: false ))
     }
     
     override func viewDidLoad() {
@@ -63,6 +94,7 @@ class ViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
+        loadMessage()
         loadImage()
         loadEmotion()
         loadChat()
@@ -123,10 +155,17 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell") as! MyCell
         cell.updateContent(sections[indexPath.section].chats[indexPath.row])
         
-        if(sections[indexPath.section].section == "Завершенные") {
-            cell.accountLabel.textColor = .systemGray2
-            cell.timeOfEventLbl.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
-        }
+//        if(sections[indexPath.section].section == "Завершенные") {
+//            cell.accountLabel.textColor = .systemGray2
+//            cell.timeOfEventLbl.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+//        }
+        
+//        func isFirstRowInsection(_: indexPath) -> Bool {
+//           return indexPath.row == 0
+//        }
+
+        
+        
         
         func isFirstRowInSection() {
             if(indexPath.row == 0){
@@ -152,6 +191,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         if(sections[indexPath.section].chats[indexPath.row].isOnline == true) {
+            //GradientView.firstColor.cgColor = CGColor.init(srgbRed: 0, green: 255, blue: 0, alpha: 0.7)
         }
         return cell
     }
@@ -163,4 +203,3 @@ extension ViewController: HeaderDelegate {
         tableView.reloadSections([idx], with: .automatic)
     }
 }
-

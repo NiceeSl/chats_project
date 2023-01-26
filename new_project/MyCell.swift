@@ -29,11 +29,22 @@ class MyCell: UITableViewCell {
     func updateContent(_ model: Chat) {
         nameLabel.text = model.name
         accountLabel.text = model.login
-        messageLabel.text = model.message
-        timeOfEventLbl.text = model.timeOfEvent
-        lastMessageLbl.text = model.lastMessage
+        messageLabel.text = model.message.text
+        timeOfEventLbl.text = model.isCompleted ? model.completedAt.string("d MMMM") : model.startedAt.string("HH:mm")
+        lastMessageLbl.text = model.message.messageDate.string("HH:mm")
         imgView.image = UIImage(named: model.image.photo)
         emotionImg.image = UIImage(named: model.emotion.emotion)
+        
+        accountLabel.textColor = model.isCompleted ? .systemGray2 : .black
+        timeOfEventLbl.font = model.isCompleted ? UIFont.systemFont(ofSize: 15, weight: .semibold) : UIFont.systemFont(ofSize: 15, weight: .regular)
+    }
+}
+
+extension Date {
+    func string(_ format: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        return dateFormatter.string(from: self)
     }
 }
     
@@ -200,3 +211,5 @@ extension UIView {
         #endif
     }
 }
+
+
